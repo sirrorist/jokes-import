@@ -1,0 +1,123 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Amo Point API",
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/api/jokes": {
+            "get": {
+                "tags": [
+                    "Jokes"
+                ],
+                "summary": "List imported jokes",
+                "description": "Returns imported jokes from the database",
+                "operationId": "c5b0cf4f2353e8a3ea66ea2185ffd33b",
+                "parameters": [
+                    {
+                        "name": "source",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "per_page",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "default": 15
+                        }
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "default": 1
+                        }
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "offset",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response"
+                    }
+                }
+            }
+        },
+        "/api/analytics/visit": {
+            "post": {
+                "tags": [
+                    "Analytics"
+                ],
+                "summary": "Track page visit",
+                "description": "Records a page visit. IP and city are resolved on the server.",
+                "operationId": "7f79ccbd33f295aa1f69133c3f1691f4",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "url"
+                                ],
+                                "properties": {
+                                    "url": {
+                                        "type": "string",
+                                        "example": "https://example.com/page"
+                                    },
+                                    "device_type": {
+                                        "type": "string",
+                                        "example": "mobile"
+                                    },
+                                    "visited_at": {
+                                        "type": "string",
+                                        "format": "date-time"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Visit recorded"
+                    },
+                    "422": {
+                        "description": "Validation error"
+                    }
+                }
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Jokes",
+            "description": "Imported external records"
+        },
+        {
+            "name": "Analytics",
+            "description": "Page visit tracking"
+        }
+    ]
+}
